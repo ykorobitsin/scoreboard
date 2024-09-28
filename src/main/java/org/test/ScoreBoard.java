@@ -97,14 +97,14 @@ public class ScoreBoard {
     private void validateTeamNames(String homeTeam, String awayTeam) {
         if (StringUtils.isAnyBlank(homeTeam, awayTeam)) {
             log.error(
-                    "Validation failed: team names cannot be null or empty. homeTeam='{}', awayTeam='{}'",
+                    "Validation failed: team names cannot be null or empty. homeTeam = '{}', awayTeam = '{}'",
                     homeTeam, awayTeam);
             throw new IllegalArgumentException("Team names cannot be null or empty.");
         }
 
         if (homeTeam.equals(awayTeam)) {
             log.error(
-                    "Validation failed: home team and away team cannot be the same. homeTeam='{}', awayTeam='{}'",
+                    "Validation failed: home team and away team cannot be the same. homeTeam = '{}', awayTeam = '{}'",
                     homeTeam, awayTeam);
             throw new IllegalArgumentException("Home team and away team cannot be the same.");
         }

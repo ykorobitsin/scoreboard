@@ -25,7 +25,7 @@ The scoreboard supports the following operations:
 - **Java**: Version 17 or higher
 - **Maven**: To manage dependencies and build the project
 - **Lombok**: For boilerplate code reduction and logging
-- **SLF4J**: For logging events
+- **SLF4J and log4j2**: For logging events
 
 ## Build
 
