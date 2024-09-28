@@ -93,14 +93,14 @@ public class ScoreBoardTest {
         assertThat(summary.get(1).getHomeTeam()).isEqualTo("Spain");
         assertThat(summary.get(1).getAwayTeam()).isEqualTo("Brazil");
 
-        assertThat(summary.get(2).getHomeTeam()).isEqualTo("Poland");
-        assertThat(summary.get(2).getAwayTeam()).isEqualTo("Germany");
+        assertThat(summary.get(2).getHomeTeam()).isEqualTo("Argentina");
+        assertThat(summary.get(2).getAwayTeam()).isEqualTo("Australia");
 
-        assertThat(summary.get(3).getHomeTeam()).isEqualTo("Argentina");
-        assertThat(summary.get(3).getAwayTeam()).isEqualTo("Australia");
+        assertThat(summary.get(3).getHomeTeam()).isEqualTo("Germany");
+        assertThat(summary.get(3).getAwayTeam()).isEqualTo("France");
 
-        assertThat(summary.get(4).getHomeTeam()).isEqualTo("Germany");
-        assertThat(summary.get(4).getAwayTeam()).isEqualTo("France");
+        assertThat(summary.get(4).getHomeTeam()).isEqualTo("Poland");
+        assertThat(summary.get(4).getAwayTeam()).isEqualTo("Germany");
     }
 
     @Test
