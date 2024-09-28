@@ -190,4 +190,137 @@ public class ScoreBoardTest {
         // Then
         assertThat(summary).isEmpty();
     }
+
+    @Test
+    public void shouldNotStartMatchWithNullTeamNames() {
+        // Given
+        ScoreBoard scoreBoard = new ScoreBoard();
+
+        // When, Then
+        Throwable thrown = catchThrowable(() -> {
+            scoreBoard.startMatch(null, "Germany");
+        });
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Team names cannot be null or empty.");
+
+        thrown = catchThrowable(() -> {
+            scoreBoard.startMatch("Poland", null);
+        });
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Team names cannot be null or empty.");
+
+        thrown = catchThrowable(() -> {
+            scoreBoard.startMatch(null, null);
+        });
+
+        // Then
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Team names cannot be null or empty.");
+    }
+
+    @Test
+    public void shouldNotStartMatchWithSameHomeAndAwayTeam() {
+        // Given
+        ScoreBoard scoreBoard = new ScoreBoard();
+
+        // When
+        Throwable thrown = catchThrowable(() -> {
+            scoreBoard.startMatch("Poland", "Poland");
+        });
+
+        // Then
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Home team and away team cannot be the same.");
+    }
+
+    @Test
+    public void shouldNotUpdateScoreWithNegativeValues() {
+        // Given
+        ScoreBoard scoreBoard = new ScoreBoard();
+        scoreBoard.startMatch("Poland", "Germany");
+
+        // When, Then
+        Throwable thrown = catchThrowable(() -> {
+            scoreBoard.updateScore("Poland", "Germany", -1, 2);
+        });
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Scores cannot be negative.");
+
+        thrown = catchThrowable(() -> {
+            scoreBoard.updateScore("Poland", "Germany", 2, -1);
+        });
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Scores cannot be negative.");
+
+        thrown = catchThrowable(() -> {
+            scoreBoard.updateScore("Poland", "Germany", -1, -1);
+        });
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Scores cannot be negative.");
+    }
+
+    @Test
+    public void shouldNotFinishNonExistentMatch() {
+        // Given
+        ScoreBoard scoreBoard = new ScoreBoard();
+
+        // When
+        Throwable thrown = catchThrowable(() -> {
+            scoreBoard.finishMatch("Poland", "Germany");
+        });
+
+        // Then
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Match between these teams does not exist.");
+    }
+
+    @Test
+    public void shouldNotFinishMatchThatHasAlreadyBeenFinished() {
+        // Given
+        ScoreBoard scoreBoard = new ScoreBoard();
+        scoreBoard.startMatch("Poland", "Germany");
+        scoreBoard.finishMatch("Poland", "Germany");
+
+        // When
+        Throwable thrown = catchThrowable(() -> {
+            scoreBoard.finishMatch("Poland", "Germany");
+        });
+
+        // Then
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Match between these teams does not exist.");
+    }
+
+    @Test
+    public void shouldNotUpdateScoreOfFinishedMatch() {
+        // Given
+        ScoreBoard scoreBoard = new ScoreBoard();
+        scoreBoard.startMatch("Poland", "Germany");
+        scoreBoard.finishMatch("Poland", "Germany");
+
+        // When
+        Throwable thrown = catchThrowable(() -> {
+            scoreBoard.updateScore("Poland", "Germany", 1, 1);
+        });
+
+        // Then
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Match not found.");
+    }
+
+    @Test
+    public void shouldNotStartMatchWithBlankTeamNames() {
+        // Given
+        ScoreBoard scoreBoard = new ScoreBoard();
+
+        // When
+        Throwable thrown = catchThrowable(() -> {
+            scoreBoard.startMatch("   ", "Germany");
+        });
+
+        // Then
+        assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Team names cannot be null or empty.");
+    }
+
 }
